@@ -1,4 +1,5 @@
 
+from cgitb import html
 import random
 from hangman import Hangman
 from words import words
@@ -26,3 +27,5 @@ def game():
 if __name__ == '__main__':
 
     game()
+
+

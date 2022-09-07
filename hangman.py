@@ -12,6 +12,7 @@ class Hangman():
         self.mot = mot
         self.guesses = [[], []]  # right 0 and wrong 1
         self.lettres = []
+        self.tries = self.guesses[1]
         for _ in self.mot:  # for each letter in the word
                     self.lettres += [" _"]
 
@@ -61,8 +62,8 @@ class Hangman():
         if len(self.guesses[1]) == 6:
             L5 += "\\"
 
-        hang = L1 + L2 + L3 + L4 + L5 + L6 + L7 + L8 + L9 + self.lettres
-        return ''.join(hang)
+        hang = ''.join(L1 + L2 + L3 + L4 + L5 + L6 + L7 + L8 + L9 + self.lettres)
+        return hang + '\n\nTries: ' + ', '.join(self.guesses[1]) + '\n'
 
 
     def guess(self):
@@ -83,9 +84,13 @@ class Hangman():
        
         essai.lower()
 
-        #if he guesses a word:
+        #if he guesses a word and its right:
         if essai == self.mot:
             self.lettres = [self.mot]
+
+        #if he guesses a word and its wrong
+        elif len(essai) == len(self.mot) and essai != self.mot and essai not in self.guesses[1]:
+            self.guesses[1] += [essai]
         
         # if he guesses a letter and letter is right:
         elif len(essai) == 1 and essai in self.mot:
@@ -94,7 +99,7 @@ class Hangman():
             
         
         # if he guesses a letter and letter is wrong:
-        elif len(essai) == 1 and essai not in self.mot:
+        elif len(essai) == 1 and essai not in self.mot and essai not in self.guesses[1]:
             # ajouter un membre du bonhomme pendu
             self.guesses[1] += essai
             
